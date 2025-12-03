@@ -1,0 +1,87 @@
+<section id="heroi">
+  <h4>Temporada de Verão</h4>
+  <h2>Super Ofertas</h2>
+  <h1>Em todos os produtos de surf</h1>
+  <p>economize mais com nossos cupons de descontos!</p>
+  <a routerLink="/shopping">
+    <button class="normal">COMPRE AGORA!</button>
+  </a>
+</section>
+
+<section id="banner" class="section-m1">
+  <h4>Equipamentos de Surf</h4>
+  <h2>Até <span>70% off</span> em Todos os produtos</h2>
+  <a routerLink="/shopping">
+    <button class="normal">Explore mais</button>
+  </a>
+</section>
+
+<section class="section-p1" style="text-align: center; background-color: #f8f9fa;">
+  <h2>Conheça Mais Sobre o Projeto</h2>
+  <p style="margin: 20px 0; font-size: 1.1rem;">Descubra as tecnologias utilizadas, o processo de desenvolvimento e os aprendizados adquiridos</p>
+  <a routerLink="/sobre">
+    <button class="normal" style="background-color: #088178; color: white; padding: 14px 40px; border: none; border-radius: 4px; cursor: pointer; font-weight: 700; font-size: 15px;">
+      Ver Detalhes do Projeto
+    </button>
+  </a>
+</section>
+
+<section class="section-p1" style="background-color: #fff;">
+  <h2 style="text-align: center; margin-bottom: 30px;">Nossos Produtos</h2>
+  
+  <div *ngIf="error" class="alert alert-danger" style="max-width: 800px; margin: 0 auto;">{{ error }}</div>
+  
+  <div *ngIf="loading" class="text-center" style="padding: 40px;">
+    <div class="spinner-border" role="status">
+      <span class="visually-hidden">Carregando...</span>
+    </div>
+  </div>
+
+  <div *ngIf="!loading && produtos.length > 0" class="carousel-container">
+    <div class="carousel-wrapper">
+      <button class="carousel-btn prev" (click)="previousSlide()" [disabled]="currentIndex === 0">
+        <i class="fas fa-chevron-left"></i>
+      </button>
+      
+      <div class="carousel-track" [style.transform]="'translateX(-' + (currentIndex * 100) + '%)'">
+        <div *ngFor="let produto of produtos" class="carousel-slide">
+          <div class="pro">
+            <img [src]="produto.imagem_url" [alt]="produto.nome" onerror="this.src='assets/image/prancha1.webp'">
+            <div class="des">
+              <span>Surf Shop</span>
+              <h5>{{ produto.nome }}</h5>
+              <div class="star">
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+              </div>
+              <h4>R$ {{ produto.preco.toFixed(2).replace('.', ',') }}</h4>
+            </div>
+            <a routerLink="/carrinho" class="cart-link">
+              <i class="fa-solid fa-cart-shopping cart"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+      
+      <button class="carousel-btn next" (click)="nextSlide()" [disabled]="currentIndex >= produtos.length - 1">
+        <i class="fas fa-chevron-right"></i>
+      </button>
+    </div>
+    
+    <div class="carousel-indicators">
+      <span *ngFor="let produto of produtos; let i = index" 
+            class="indicator" 
+            [class.active]="i === currentIndex"
+            (click)="goToSlide(i)">
+      </span>
+    </div>
+  </div>
+
+  <div *ngIf="!loading && produtos.length === 0" class="text-center" style="padding: 40px;">
+    <p>Nenhum produto cadastrado ainda.</p>
+  </div>
+</section>
+

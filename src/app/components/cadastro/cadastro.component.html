@@ -1,0 +1,26 @@
+<div class="container mt-5">
+  <h2>Cadastrar Produto</h2>
+  <form (ngSubmit)="handleSubmit()">
+    <div class="mb-3">
+      <label for="nome" class="form-label">Nome do Produto</label>
+      <input [(ngModel)]="nome" type="text" class="form-control" id="nome" name="nome" required>
+    </div>
+    <div class="mb-3">
+      <label for="preco" class="form-label">Preço</label>
+      <input [(ngModel)]="preco" type="number" class="form-control" id="preco" name="preco" required>
+    </div>
+    <div class="mb-3">
+      <label for="preco_anterior" class="form-label">Preço Anterior (Opcional)</label>
+      <input [(ngModel)]="preco_anterior" type="number" class="form-control" id="preco_anterior" name="preco_anterior">
+    </div>
+    <div class="mb-3">
+      <label for="imagem" class="form-label">URL da Imagem</label>
+      <input [(ngModel)]="imagem" type="text" class="form-control" id="imagem" name="imagem" required>
+    </div>
+    <button type="submit" class="btn btn-primary">Cadastrar</button>
+  </form>
+  <div *ngIf="errorMessage" class="mt-3 alert alert-danger">
+    {{ errorMessage }}
+  </div>
+</div>
+

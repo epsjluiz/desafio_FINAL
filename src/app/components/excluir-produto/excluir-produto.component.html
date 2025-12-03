@@ -1,0 +1,22 @@
+<div class="modal" tabindex="-1" [class.show]="showModal" [class.d-block]="showModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Confirmar Exclusão</h5>
+        <button type="button" class="btn-close" (click)="fecharModal()"></button>
+      </div>
+      <div class="modal-body">
+        <p>Tem certeza que deseja excluir o produto "{{ nomeProduto }}"?</p>
+        <div *ngIf="error" class="alert alert-danger">{{ error }}</div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="fecharModal()">Cancelar</button>
+        <button type="button" class="btn btn-danger" (click)="confirmarExclusao()" [disabled]="loading">
+          {{ loading ? 'Excluindo...' : 'Excluir' }}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal-backdrop fade show" *ngIf="showModal"></div>
+

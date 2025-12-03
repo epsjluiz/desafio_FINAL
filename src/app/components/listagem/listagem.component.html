@@ -1,0 +1,71 @@
+<div class="container mt-4">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h2>Listagem de Produtos</h2>
+    <a routerLink="/cadastro" class="btn btn-success">
+      Novo Produto
+    </a>
+  </div>
+
+  <div *ngIf="error" class="alert alert-danger">{{ error }}</div>
+  
+  <div *ngIf="loading" class="text-center">
+    <div class="spinner-border" role="status">
+      <span class="visually-hidden">Carregando...</span>
+    </div>
+  </div>
+
+  <div *ngIf="!loading" class="table-responsive">
+    <table class="table table-striped table-hover">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Imagem</th>
+          <th>Nome</th>
+          <th>Preço</th>
+          <th>Preço Anterior</th>
+          <th>Desconto</th>
+          <th>Ações</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let produto of produtos">
+          <td>{{ produto.id }}</td>
+          <td>
+            <img 
+              [src]="produto.imagem_url" 
+              [alt]="produto.nome"
+              class="produto-thumbnail"
+            >
+          </td>
+          <td>{{ produto.nome }}</td>
+          <td>R$ {{ produto.preco.toFixed(2) }}</td>
+          <td>
+            <div class="btn-group">
+              <a 
+                [routerLink]="['/editar-produto', produto.id]" 
+                class="btn btn-sm btn-primary"
+              >
+                <i class="fas fa-edit"></i> Editar
+              </a>
+              <button 
+                (click)="abrirModalExclusao(produto)" 
+                class="btn btn-sm btn-danger"
+              >
+                <i class="fas fa-trash"></i> Excluir
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <app-excluir-produto
+    *ngIf="produtoParaExcluir"
+    [produtoId]="produtoParaExcluir.id!"
+    [nomeProduto]="produtoParaExcluir.nome"
+    [(showModal)]="showModalExclusao"
+    (produtoExcluido)="produtoExcluido()"
+  ></app-excluir-produto>
+</div>
+

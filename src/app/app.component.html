@@ -1,0 +1,71 @@
+<div class="app-container">
+  <section id="header">
+    <a routerLink="/">
+      <img src="assets/image/logo-surfshopping.png" class="logo" alt="Surf Shop Logo" onerror="this.src='assets/image/logo.png'">
+    </a>
+    <nav>
+      <ul id="navbar">
+        <li><a routerLink="/" [class.active]="isActiveRoute('/')">Home</a></li>
+        <li><a routerLink="/shopping" [class.active]="isActiveRoute('/shopping')">Shop</a></li>
+        <li><a routerLink="/contatos" [class.active]="isActiveRoute('/contatos')">Contatos</a></li>
+        <li>
+          <a routerLink="/carrinho" [class.active]="isActiveRoute('/carrinho')">
+            <i class="fa-solid fa-cart-shopping"></i>
+          </a>
+        </li>
+        <li>
+          <a routerLink="/login" [class.active]="isActiveRoute('/login')">
+            <span class="material-icons">person</span>
+          </a>
+        </li>
+      </ul>
+    </nav>
+  </section>
+
+  <router-outlet></router-outlet>
+
+  <footer class="section-p1">
+    <div class="col">
+      <img src="assets/image/logo-surfshopping.png" class="logo" alt="Surf Shop Logo" onerror="this.src='assets/image/logo.png'">
+      <h4>Contatos</h4>
+      <p><strong>Telefone:</strong> (71) 9 9456-0042 / (71) 9 8374-0345</p>
+      <p><strong>Horário:</strong> 10:00 - 18:00, Segunda - Sábado</p>
+      <div class="follow">
+        <h4>Nos Siga!</h4>
+        <div class="icon">
+          <a href="#" target="_blank"><i class="fab fa-facebook-f"></i></a>
+          <a href="#" target="_blank"><i class="fab fa-twitter"></i></a>
+          <a href="#" target="_blank"><i class="fab fa-instagram"></i></a>
+          <a href="#" target="_blank"><i class="fab fa-pinterest-p"></i></a>
+          <a href="#" target="_blank"><i class="fab fa-youtube"></i></a>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="col">
+      <h4>Minha Conta</h4>
+      <a routerLink="/login">Entrar</a>
+      <a routerLink="/carrinho">Ver Carrinho</a>
+      <a routerLink="/lista-desejo">Minha lista de desejo</a>
+      <a routerLink="/rastreio">Rastreiar minha Compra</a>
+      <a routerLink="/ajuda">Ajuda</a>
+    </div>
+
+    <div class="col install">
+      <h4>Instalar Aplicativos</h4>
+      <p>Na App Store ou Google Play</p>
+      <div class="row">
+        <img src="assets/image/app.jpg" alt="App Store">
+        <img src="assets/image/play.jpg" alt="Google Play">
+      </div>
+      <p>Formas de Pagamentos Seguros</p>
+      <img src="assets/image/pay.png" alt="Formas de Pagamento">
+    </div>
+
+    <div class="copyright">
+      <p>&copy; 2024 Surf Shop - Todos os direitos reservados</p>
+    </div>
+  </footer>
+</div>
+

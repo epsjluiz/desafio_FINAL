@@ -1,0 +1,27 @@
+<div class="container mt-5">
+  <h1>Login</h1>
+  <form (ngSubmit)="handleLogin()">
+    <div class="mb-3">
+      <label for="username" class="form-label">Usuário</label>
+      <input
+        type="text"
+        id="username"
+        [(ngModel)]="username"
+        name="username"
+        class="form-control"
+      />
+    </div>
+    <div class="mb-3">
+      <label for="password" class="form-label">Senha</label>
+      <input
+        type="password"
+        id="password"
+        [(ngModel)]="password"
+        name="password"
+        class="form-control"
+      />
+    </div>
+    <button type="submit" class="btn btn-primary">Login</button>
+  </form>
+</div>
+
