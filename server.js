@@ -11,10 +11,20 @@ db.exec(`
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     nome TEXT NOT NULL,
     preco REAL NOT NULL,
-    preco_anterior REAL,
     imagem_url TEXT
   )
 `);
+
+// Migração: garantir coluna preco_anterior existe
+try {
+  const cols = db.prepare("PRAGMA table_info(produtos)").all();
+  const hasPrecoAnterior = cols.some((c) => c.name === 'preco_anterior');
+  if (!hasPrecoAnterior) {
+    db.exec('ALTER TABLE produtos ADD COLUMN preco_anterior REAL');
+  }
+} catch (e) {
+  console.error('Falha ao verificar/adicionar coluna preco_anterior:', e);
+}
 
 const countResult = db.prepare('SELECT COUNT(*) as total FROM produtos').get();
 if (countResult && countResult.total === 0) {

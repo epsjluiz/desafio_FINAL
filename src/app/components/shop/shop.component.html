@@ -21,9 +21,15 @@
               <i class="fas fa-star"></i>
               <i class="fas fa-star"></i>
             </div>
-            <h4>R$ {{ produto.preco }}</h4>
+            <div class="price-group">
+              <span class="current-price">R$ {{ produto.preco.toFixed(2).replace('.', ',') }}</span>
+              <ng-container *ngIf="produto.preco_anterior && produto.preco_anterior > produto.preco">
+                <span class="old-price">R$ {{ produto.preco_anterior.toFixed(2).replace('.', ',') }}</span>
+                <span class="discount-badge">-{{ ((1 - (produto.preco / produto.preco_anterior)) * 100).toFixed(0) }}%</span>
+              </ng-container>
+            </div>
           </div>
-          <a href="#"><i class="fa-solid fa-cart-shopping cart"></i></a>
+          <a href="#" class="cart"><i class="fa-solid fa-cart-shopping"></i></a>
         </div>
       </div>
     </div>

@@ -10,7 +10,7 @@ import { ProdutoService } from '../../services/produto.service';
 export class CadastroComponent {
   nome = '';
   preco: number | null = null;
-  preco_anterior: number | null = null;
+  preco_anterior: number | undefined;
   imagem = '';
   errorMessage = '';
 
@@ -34,9 +34,12 @@ export class CadastroComponent {
         next: () => {
           this.router.navigate(['/listagem']);
         },
-        error: (error) => {
-          this.errorMessage = 'Erro ao cadastrar produto.';
-          console.error(error);
+        error: (err) => {
+          const serverMsg = err?.error?.error || '';
+          const status = err?.status ? ` (código ${err.status})` : '';
+          const detail = serverMsg ? `: ${serverMsg}` : '';
+          this.errorMessage = `Erro ao cadastrar produto${status}${detail}`;
+          console.error(err);
         }
       });
     } else {

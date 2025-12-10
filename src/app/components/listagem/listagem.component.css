@@ -13,3 +13,8 @@
   white-space: nowrap;
 }
 
+.old-price {
+  color: #ef3636;
+  text-decoration: line-through;
+}
+

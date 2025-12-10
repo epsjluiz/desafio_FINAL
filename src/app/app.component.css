@@ -1,0 +1,18 @@
+footer .install .row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+footer .install .store-badge {
+  height: 40px;
+  width: auto;
+  display: inline-block;
+  border-radius: 6px;
+}
+
+@media (max-width: 768px) {
+  footer .install .store-badge {
+    height: 32px;
+  }
+}
