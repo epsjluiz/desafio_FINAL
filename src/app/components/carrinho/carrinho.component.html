@@ -1,0 +1,35 @@
+<div class="container mt-4">
+  <h2>Carrinho</h2>
+  <div *ngIf="loading">Carregando...</div>
+  <div *ngIf="!loading && error" class="alert alert-danger">{{ error }}</div>
+
+  <div *ngIf="!loading">
+    <div *ngIf="totalItens === 0" class="alert alert-info">
+      Ops... Parece que você não escolheu nada ainda, verifique a 
+      <a routerLink="/shopping">loja</a>.
+    </div>
+
+    <p *ngIf="totalItens > 0"><strong>Total de itens:</strong> {{ totalItens }}</p>
+    <div *ngIf="totalItens > 0" class="table-responsive">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Produto</th>
+            <th>Quantidade</th>
+            <th>Preço</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of itens">
+            <td class="produto">
+              <img [src]="item.imagem_url" [alt]="item.nome" class="thumb">
+              {{ item.nome }}
+            </td>
+            <td>{{ item.quantidade }}</td>
+            <td>R$ {{ (item.preco * item.quantidade).toFixed(2).replace('.', ',') }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

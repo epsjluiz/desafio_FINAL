@@ -16,3 +16,33 @@ footer .install .store-badge {
     height: 32px;
   }
 }
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+}
+
+.brand-name {
+  font-weight: 800;
+  font-size: 18px;
+  color: #1a1a1a;
+}
+
+.cart-wrapper {
+  position: relative;
+}
+
+.cart-alert {
+  position: absolute;
+  top: 32px;
+  left: -10px;
+  background: #e8f6ea;
+  color: #088178;
+  padding: 6px 10px;
+  border-radius: 6px;
+  border: 1px solid #cce7d0;
+  font-size: 12px;
+  white-space: nowrap;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}

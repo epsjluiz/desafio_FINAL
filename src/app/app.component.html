@@ -1,17 +1,19 @@
 <div class="app-container">
   <section id="header">
-    <a routerLink="/">
+    <a routerLink="/" class="brand">
       <img src="assets/image/logo-surfshopping.png" class="logo" alt="Surf Shop Logo" onerror="this.src='assets/image/logo.png'">
+      <span class="brand-name">Surf Shop</span>
     </a>
     <nav>
       <ul id="navbar">
         <li><a routerLink="/" [class.active]="isActiveRoute('/')">Home</a></li>
         <li><a routerLink="/shopping" [class.active]="isActiveRoute('/shopping')">Shop</a></li>
         <li><a routerLink="/contatos" [class.active]="isActiveRoute('/contatos')">Contatos</a></li>
-        <li>
-          <a routerLink="/carrinho" [class.active]="isActiveRoute('/carrinho')">
+        <li class="cart-wrapper">
+          <a routerLink="/carrinho" [class.active]="isActiveRoute('/carrinho')" class="cart-link-header">
             <i class="fa-solid fa-cart-shopping"></i>
           </a>
+          <div *ngIf="showCartAlert" class="cart-alert">Produto adicionado ao carrinho!</div>
         </li>
         <li>
           <a routerLink="/login" [class.active]="isActiveRoute('/login')">
@@ -28,7 +30,7 @@
     <div class="col">
       <img src="assets/image/logo-surfshopping.png" class="logo" alt="Surf Shop Logo" onerror="this.src='assets/image/logo.png'">
       <h4>Contatos</h4>
-      <p><strong>Telefone:</strong> (71) 9 9456-0042 / (71) 9 8374-0345</p>
+      <p><strong>Telefone:</strong> (71) 9 9732-5623</p>
       <p><strong>Horário:</strong> 10:00 - 18:00, Segunda - Sábado</p>
       <div class="follow">
         <h4>Nos Siga!</h4>
@@ -47,8 +49,7 @@
       <h4>Minha Conta</h4>
       <a routerLink="/login">Entrar</a>
       <a routerLink="/carrinho">Ver Carrinho</a>
-      <a routerLink="/lista-desejo">Minha lista de desejo</a>
-      <a routerLink="/rastreio">Rastreiar minha Compra</a>
+      <a href="https://rastreamento.correios.com.br/app/index.php" target="_blank" rel="noopener noreferrer">Rastreiar minha Compra</a>
       <a routerLink="/ajuda">Ajuda</a>
     </div>
 

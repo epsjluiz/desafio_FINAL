@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ProdutoService, Produto } from '../../services/produto.service';
+import { CartService } from '../../services/cart.service';
 
 @Component({
   selector: 'app-home',
@@ -12,7 +13,7 @@ export class HomeComponent implements OnInit {
   error: string | null = null;
   currentIndex = 0;
 
-  constructor(private produtoService: ProdutoService) {}
+  constructor(private produtoService: ProdutoService, private cartService: CartService) {}
 
   ngOnInit(): void {
     this.carregarProdutos();
@@ -48,6 +49,14 @@ export class HomeComponent implements OnInit {
 
   goToSlide(index: number): void {
     this.currentIndex = index;
+  }
+
+  adicionarAoCarrinho(produto: Produto): void {
+    if (!produto.id) return;
+    this.cartService.addItem(produto.id).subscribe({
+      next: () => {},
+      error: (err) => { console.error('Erro ao adicionar ao carrinho:', err); }
+    });
   }
 }
 

@@ -11,6 +11,7 @@ import { CadastroComponent } from './components/cadastro/cadastro.component';
 import { ListagemComponent } from './components/listagem/listagem.component';
 import { EditarProdutoComponent } from './components/editar-produto/editar-produto.component';
 import { ExcluirProdutoComponent } from './components/excluir-produto/excluir-produto.component';
+import { CarrinhoComponent } from './components/carrinho/carrinho.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { ExcluirProdutoComponent } from './components/excluir-produto/excluir-pr
     CadastroComponent,
     ListagemComponent,
     EditarProdutoComponent,
-    ExcluirProdutoComponent
+    ExcluirProdutoComponent,
+    CarrinhoComponent
   ],
   imports: [
     BrowserModule,

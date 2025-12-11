@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ProdutoService, Produto } from '../../services/produto.service';
+import { CartService } from '../../services/cart.service';
 
 @Component({
   selector: 'app-shop',
@@ -11,7 +12,7 @@ export class ShopComponent implements OnInit {
   isLoading = true;
   error: string | null = null;
 
-  constructor(private produtoService: ProdutoService) {}
+  constructor(private produtoService: ProdutoService, private cartService: CartService) {}
 
   ngOnInit(): void {
     this.carregarProdutos();
@@ -28,6 +29,14 @@ export class ShopComponent implements OnInit {
         console.log(err);
         this.isLoading = false;
       }
+    });
+  }
+
+  adicionarAoCarrinho(produto: Produto): void {
+    if (!produto.id) return;
+    this.cartService.addItem(produto.id).subscribe({
+      next: () => {},
+      error: (err) => { console.error('Erro ao adicionar ao carrinho:', err); }
     });
   }
 }

@@ -16,16 +16,6 @@
   </a>
 </section>
 
-<section class="section-p1" style="text-align: center; background-color: #f8f9fa;">
-  <h2>Conheça Mais Sobre o Projeto</h2>
-  <p style="margin: 20px 0; font-size: 1.1rem;">Descubra as tecnologias utilizadas, o processo de desenvolvimento e os aprendizados adquiridos</p>
-  <a routerLink="/sobre">
-    <button class="normal" style="background-color: #088178; color: white; padding: 14px 40px; border: none; border-radius: 4px; cursor: pointer; font-weight: 700; font-size: 15px;">
-      Ver Detalhes do Projeto
-    </button>
-  </a>
-</section>
-
 <section class="section-p1" style="background-color: #fff;">
   <h2 style="text-align: center; margin-bottom: 30px;">Nossos Produtos</h2>
   
@@ -65,9 +55,9 @@
                 </ng-container>
               </div>
             </div>
-            <a routerLink="/carrinho" class="cart-link">
-              <i class="fa-solid fa-cart-shopping cart"></i>
-            </a>
+            <button class="cart" type="button" (click)="adicionarAoCarrinho(produto)" aria-label="Adicionar ao carrinho">
+              <i class="fa-solid fa-cart-shopping"></i>
+            </button>
           </div>
         </div>
       </div>

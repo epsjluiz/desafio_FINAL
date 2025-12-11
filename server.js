@@ -15,6 +15,16 @@ db.exec(`
   )
 `);
 
+// Carrinho
+db.exec(`
+  CREATE TABLE IF NOT EXISTS carrinho_itens (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    produto_id INTEGER NOT NULL,
+    quantidade INTEGER NOT NULL DEFAULT 1,
+    created_at TEXT DEFAULT (datetime('now'))
+  )
+`);
+
 // Migração: garantir coluna preco_anterior existe
 try {
   const cols = db.prepare("PRAGMA table_info(produtos)").all();
@@ -128,6 +138,58 @@ app.delete('/produtos/:id', (req, res) => {
     res.json({ message: 'Produto excluído com sucesso' });
   } catch (error) {
     res.status(500).json({ error: 'Erro ao excluir produto: ' + error.message });
+  }
+});
+
+// Carrinho endpoints
+app.get('/carrinho', (req, res) => {
+  try {
+    const itens = db.prepare(`
+      SELECT ci.id, ci.quantidade, p.id as produto_id, p.nome, p.preco, p.preco_anterior, p.imagem_url
+      FROM carrinho_itens ci
+      JOIN produtos p ON p.id = ci.produto_id
+      ORDER BY ci.id DESC
+    `).all();
+    const totalItens = db.prepare('SELECT COALESCE(SUM(quantidade),0) as total FROM carrinho_itens').get();
+    res.json({ itens, total: totalItens.total });
+  } catch (error) {
+    res.status(500).json({ error: 'Erro ao buscar carrinho: ' + error.message });
+  }
+});
+
+app.post('/carrinho', (req, res) => {
+  try {
+    const { produto_id, quantidade } = req.body;
+    const produto = db.prepare('SELECT * FROM produtos WHERE id = ?').get(produto_id);
+    if (!produto) {
+      return res.status(404).json({ error: 'Produto não encontrado' });
+    }
+    const existente = db.prepare('SELECT * FROM carrinho_itens WHERE produto_id = ?').get(produto_id);
+    if (existente) {
+      const novaQtde = (existente.quantidade || 1) + (quantidade ? parseInt(quantidade) : 1);
+      db.prepare('UPDATE carrinho_itens SET quantidade = ? WHERE id = ?').run(novaQtde, existente.id);
+    } else {
+      db.prepare('INSERT INTO carrinho_itens (produto_id, quantidade) VALUES (?, ?)')
+        .run(produto_id, quantidade ? parseInt(quantidade) : 1);
+    }
+    const totalItens = db.prepare('SELECT COALESCE(SUM(quantidade),0) as total FROM carrinho_itens').get();
+    res.status(201).json({ message: 'Item adicionado ao carrinho', total: totalItens.total });
+  } catch (error) {
+    res.status(500).json({ error: 'Erro ao adicionar item: ' + error.message });
+  }
+});
+
+app.delete('/carrinho/:id', (req, res) => {
+  try {
+    const id = parseInt(req.params.id);
+    const item = db.prepare('SELECT * FROM carrinho_itens WHERE id = ?').get(id);
+    if (!item) {
+      return res.status(404).json({ error: 'Item do carrinho não encontrado' });
+    }
+    db.prepare('DELETE FROM carrinho_itens WHERE id = ?').run(id);
+    res.json({ message: 'Item removido do carrinho' });
+  } catch (error) {
+    res.status(500).json({ error: 'Erro ao remover item: ' + error.message });
   }
 });
 
