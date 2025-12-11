@@ -22,14 +22,10 @@ export class CarrinhoComponent implements OnInit {
         this.loading = false;
       },
       error: (err) => {
-        if (err && err.status === 404) {
-          this.totalItens = 0;
-          this.error = null;
-        } else {
-          this.error = 'Erro ao carregar carrinho: ' + err.message;
-        }
+        this.error = 'Erro ao carregar carrinho: ' + err.message;
         this.loading = false;
       }
     });
   }
 }
+

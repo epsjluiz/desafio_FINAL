@@ -19,7 +19,7 @@ export interface CarrinhoResponse {
 
 @Injectable({ providedIn: 'root' })
 export class CartService {
-  private apiUrl = 'http://localhost:3001/carrinho';
+  private apiUrl = 'http://localhost:3000/carrinho';
   itemAdded$ = new Subject<{ total: number; nome: string }>();
 
   constructor(private http: HttpClient) {}
@@ -43,3 +43,4 @@ export class CartService {
     return this.http.get<CarrinhoResponse>(this.apiUrl);
   }
 }
+
