@@ -8,12 +8,13 @@ import { ListagemComponent } from './components/listagem/listagem.component';
 import { EditarProdutoComponent } from './components/editar-produto/editar-produto.component';
 import { AuthGuard } from './guards/auth.guard';
 import { CarrinhoComponent } from './components/carrinho/carrinho.component';
+import { ContatosComponent } from './components/contatos/contatos.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'login', component: LoginComponent },
   { path: 'shopping', component: ShopComponent },
-  { path: 'carrinho', component: CarrinhoComponent },
+  { path: 'contatos', component: ContatosComponent },
   { path: 'cadastro', component: CadastroComponent, canActivate: [AuthGuard] },
   { path: 'listagem', component: ListagemComponent, canActivate: [AuthGuard] },
   { path: 'editar-produto/:id', component: EditarProdutoComponent, canActivate: [AuthGuard] },

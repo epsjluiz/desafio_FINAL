@@ -12,6 +12,7 @@ import { ListagemComponent } from './components/listagem/listagem.component';
 import { EditarProdutoComponent } from './components/editar-produto/editar-produto.component';
 import { ExcluirProdutoComponent } from './components/excluir-produto/excluir-produto.component';
 import { CarrinhoComponent } from './components/carrinho/carrinho.component';
+import { ContatosComponent } from './components/contatos/contatos.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { CarrinhoComponent } from './components/carrinho/carrinho.component';
     ListagemComponent,
     EditarProdutoComponent,
     ExcluirProdutoComponent,
-    CarrinhoComponent
+    CarrinhoComponent,
+    ContatosComponent
   ],
   imports: [
     BrowserModule,

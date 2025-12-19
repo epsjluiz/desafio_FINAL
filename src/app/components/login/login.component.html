@@ -1,27 +1,28 @@
-<div class="container mt-5">
-  <h1>Login</h1>
+<div class="contact-container">
+  <h3>Login</h3>
   <form (ngSubmit)="handleLogin()">
-    <div class="mb-3">
-      <label for="username" class="form-label">Usuário</label>
+    <div class="form-group">
       <input
         type="text"
         id="username"
         [(ngModel)]="username"
         name="username"
         class="form-control"
+        placeholder="USUÁRIO"
       />
     </div>
-    <div class="mb-3">
-      <label for="password" class="form-label">Senha</label>
+    <div class="form-group">
       <input
         type="password"
         id="password"
         [(ngModel)]="password"
         name="password"
         class="form-control"
+        placeholder="SENHA"
       />
     </div>
-    <button type="submit" class="btn btn-primary">Login</button>
+    <div class="btn-container">
+      <button type="submit" class="btn-enviar">Login</button>
+    </div>
   </form>
 </div>
-

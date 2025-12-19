@@ -1,3 +1,17 @@
+.app-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+router-outlet + * {
+  flex-grow: 1;
+}
+
+footer {
+  margin-top: auto;
+}
+
 footer .install .row {
   display: flex;
   align-items: center;
@@ -45,4 +59,27 @@ footer .install .store-badge {
   font-size: 12px;
   white-space: nowrap;
   box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.cart-link-header {
+  color: #088178;
+}
+
+.cart-link-header:hover {
+  color: #066b65;
+}
+.cart-badge {
+  position: absolute;
+  bottom: -4px;
+  right: -6px;
+  background: #088178;
+  color: #fff;
+  border-radius: 10px;
+  min-width: 18px;
+  height: 18px;
+  line-height: 18px;
+  font-size: 11px;
+  text-align: center;
+  padding: 0 4px;
+  border: 1px solid #fff;
 }

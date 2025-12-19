@@ -6,13 +6,22 @@
     </a>
     <nav>
       <ul id="navbar">
+        <li class="cep-header-container">
+          <input type="text" 
+                 class="header-cep-input" 
+                 placeholder="Informe seu CEP" 
+                 maxlength="9"
+                 (keyup.enter)="onCepEnter($event)"
+                 (blur)="onCepBlur($event)">
+        </li>
         <li><a routerLink="/" [class.active]="isActiveRoute('/')">Home</a></li>
         <li><a routerLink="/shopping" [class.active]="isActiveRoute('/shopping')">Shop</a></li>
         <li><a routerLink="/contatos" [class.active]="isActiveRoute('/contatos')">Contatos</a></li>
         <li class="cart-wrapper">
-          <a routerLink="/carrinho" [class.active]="isActiveRoute('/carrinho')" class="cart-link-header">
+          <a (click)="toggleCart()" class="cart-link-header" style="cursor: pointer;">
             <i class="fa-solid fa-cart-shopping"></i>
           </a>
+          <span class="cart-badge" *ngIf="cartCount > 0">{{ cartCount }}</span>
           <div *ngIf="showCartAlert" class="cart-alert">Produto adicionado ao carrinho!</div>
         </li>
         <li>
@@ -26,7 +35,7 @@
 
   <router-outlet></router-outlet>
 
-  <footer class="section-p1">
+  <footer class="section-p1" *ngIf="currentRoute !== '/listagem'">
     <div class="col">
       <img src="assets/image/logo-surfshopping.png" class="logo" alt="Surf Shop Logo" onerror="this.src='assets/image/logo.png'">
       <h4>Contatos</h4>
@@ -73,4 +82,6 @@
     </div>
   </footer>
 </div>
+
+<app-carrinho></app-carrinho>
 

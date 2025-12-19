@@ -11,8 +11,9 @@ import { CartService } from './services/cart.service';
 export class AppComponent {
   currentRoute = '';
   showCartAlert = false;
+  cartCount = 0;
 
-  constructor(private router: Router, private cartService: CartService) {
+  constructor(private router: Router, public cartService: CartService) {
     this.router.events.pipe(
       filter(event => event instanceof NavigationEnd)
     ).subscribe((event: any) => {
@@ -23,10 +24,33 @@ export class AppComponent {
       this.showCartAlert = true;
       setTimeout(() => { this.showCartAlert = false; }, 2500);
     });
+
+    this.cartService.cartTotal$.subscribe((count) => {
+      this.cartCount = count || 0;
+    });
+    this.cartService.refreshCartTotal();
+  }
+
+  toggleCart(): void {
+    this.cartService.toggleCart(true);
+  }
+
+  onCepEnter(event: any): void {
+    const cep = event.target.value;
+    if (cep) {
+      this.cartService.calcularFrete(cep);
+      this.cartService.toggleCart(true);
+    }
+  }
+
+  onCepBlur(event: any): void {
+    const cep = event.target.value;
+    if (cep) {
+      this.cartService.calcularFrete(cep);
+    }
   }
 
   isActiveRoute(route: string): boolean {
     return this.currentRoute === route;
   }
 }
-

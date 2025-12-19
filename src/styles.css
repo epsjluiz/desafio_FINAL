@@ -21,6 +21,12 @@ body {
   top: 0;
   left: 0;
   z-index: 999;
+  height: 90px;
+}
+
+.logo {
+  height: 50px;
+  width: auto;
 }
 
 @media (max-width: 768px) {
@@ -59,6 +65,23 @@ body {
   position: relative;
 }
 
+.header-cep-input {
+  padding: 8px 15px;
+  border: 1px solid #ddd;
+  border-radius: 20px;
+  outline: none;
+  font-size: 14px;
+  color: #1a1a1a;
+  width: 150px;
+  transition: all 0.3s ease;
+}
+
+.header-cep-input:focus {
+  border-color: #088178;
+  box-shadow: 0 0 5px rgba(8, 129, 120, 0.2);
+  width: 170px;
+}
+
 #navbar li a {
   text-decoration: none;
   font-size: 16px;
@@ -94,9 +117,10 @@ body {
   padding: 0 80px;
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: flex-end;
   justify-content: center;
   position: relative;
+  text-align: right;
 }
 
 #heroi::before {
@@ -261,6 +285,8 @@ footer .follow i {
 
 .pro img {
   width: 100%;
+  height: 200px;
+  object-fit: cover;
   border-radius: 20px;
 }
 
@@ -296,9 +322,9 @@ footer .follow i {
   width: 40px;
   height: 40px;
   border-radius: 50px;
-  background-color: #e8f6ea;
-  color: #088178;
-  border: 1px solid #cce7d0;
+  background-color: #088178;
+  color: #fff;
+  border: 1px solid #088178;
   position: absolute;
   bottom: 20px;
   right: 10px;
@@ -318,7 +344,7 @@ footer .follow i {
 #page-header {
   background-image: url("/assets/image/banner.png");
   width: 100%;
-  height: 40vh;
+  height: 30vh;
   background-size: cover;
   display: flex;
   justify-content: center;

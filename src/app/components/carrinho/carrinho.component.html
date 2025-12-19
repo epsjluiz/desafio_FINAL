@@ -1,35 +1,74 @@
-<div class="container mt-4">
-  <h2>Carrinho</h2>
-  <div *ngIf="loading">Carregando...</div>
-  <div *ngIf="!loading && error" class="alert alert-danger">{{ error }}</div>
+<div class="cart-overlay" [class.open]="isOpen" (click)="closeCart()"></div>
+<div class="cart-sidebar" [class.open]="isOpen">
+  <div class="cart-header">
+    <div class="header-top">
+      <h3>Seu pedido em</h3>
+      <button class="btn-close-cart" (click)="closeCart()">&times;</button>
+    </div>
+    <h2>Surf Shop</h2>
+    <a routerLink="/shopping" (click)="closeCart()" class="ver-cardapio">Ver Produtos</a>
+  </div>
 
-  <div *ngIf="!loading">
-    <div *ngIf="totalItens === 0" class="alert alert-info">
-      Ops... Parece que você não escolheu nada ainda, verifique a 
-      <a routerLink="/shopping">loja</a>.
+  <div *ngIf="loading" class="text-center p-4">
+      <div class="spinner-border" style="color: #088178;" role="status">
+        <span class="visually-hidden">Carregando...</span>
+      </div>
     </div>
 
-    <p *ngIf="totalItens > 0"><strong>Total de itens:</strong> {{ totalItens }}</p>
-    <div *ngIf="totalItens > 0" class="table-responsive">
-      <table class="table table-striped">
-        <thead>
-          <tr>
-            <th>Produto</th>
-            <th>Quantidade</th>
-            <th>Preço</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let item of itens">
-            <td class="produto">
-              <img [src]="item.imagem_url" [alt]="item.nome" class="thumb">
-              {{ item.nome }}
-            </td>
-            <td>{{ item.quantidade }}</td>
-            <td>R$ {{ (item.preco * item.quantidade).toFixed(2).replace('.', ',') }}</td>
-          </tr>
-        </tbody>
-      </table>
+    <div *ngIf="!loading && totalItens === 0" class="empty-cart text-center p-4">
+      <i class="fas fa-shopping-basket mb-3" style="font-size: 40px; color: #ccc;"></i>
+      <p>Sua sacola está vazia</p>
+      <a routerLink="/shopping" class="btn btn-outline-danger">Adicionar itens</a>
+    </div>
+
+    <div *ngIf="!loading && totalItens > 0" class="cart-content">
+      
+      <div class="delivery-section" *ngIf="cep">
+        <div class="delivery-info">
+          <p><strong>CEP:</strong> {{ cep }}</p>
+          <p><small>Distância: {{ distancia }} km</small></p>
+          <p class="address-preview">{{ endereco }}</p>
+        </div>
+      </div>
+
+      <div class="items-list">
+        <div *ngFor="let item of itens" class="cart-item">
+          <div class="item-details">
+            <span class="item-qty">{{ item.quantidade }}x</span>
+            <div class="item-info">
+              <span class="item-name">{{ item.nome }}</span>
+              <span class="item-price">R$ {{ (item.preco * item.quantidade).toFixed(2).replace('.', ',') }}</span>
+            </div>
+          </div>
+          <div class="item-actions">
+             <div class="qty-controls">
+               <button (click)="decrementar(item)" class="btn-qty" [disabled]="loading">-</button>
+               <span class="qty-display">{{ item.quantidade }}</span>
+               <button (click)="incrementar(item)" class="btn-qty" [disabled]="loading">+</button>
+             </div>
+             <button (click)="remover(item)" class="btn-remove">Remover</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="cart-summary">
+        <div class="summary-row">
+          <span>Subtotal</span>
+          <span>R$ {{ calcularSubtotal().toFixed(2).replace('.', ',') }}</span>
+        </div>
+        <div class="summary-row">
+          <span>Taxa de entrega</span>
+          <span *ngIf="taxaEntrega > 0">R$ {{ taxaEntrega.toFixed(2).replace('.', ',') }}</span>
+          <span *ngIf="taxaEntrega === 0" style="color: #088178; font-weight: bold;">Grátis</span>
+        </div>
+        <div class="summary-row total">
+          <span>Total</span>
+          <span>R$ {{ calcularTotal().toFixed(2).replace('.', ',') }}</span>
+        </div>
+      </div>
+
+      <div class="cart-footer">
+      <button class="btn-payment">Escolher forma de pagamento</button>
     </div>
   </div>
 </div>

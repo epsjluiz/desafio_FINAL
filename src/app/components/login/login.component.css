@@ -1,0 +1,56 @@
+.contact-container {
+  max-width: 600px;
+  margin: 40px auto;
+  padding: 20px;
+  background-color: #fff;
+}
+
+h3 {
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 25px;
+  color: #000;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-control {
+  width: 100%;
+  padding: 12px 15px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 14px;
+  color: #555;
+  outline: none;
+}
+
+.form-control:focus {
+  border-color: #088178;
+}
+
+textarea.form-control {
+  resize: vertical;
+}
+
+.btn-container {
+  display: flex;
+  justify-content: center;
+}
+
+.btn-enviar {
+  background-color: #088178;
+  color: #fff;
+  border: none;
+  padding: 12px 60px;
+  border-radius: 4px;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.btn-enviar:hover {
+  background-color: #066b65;
+}

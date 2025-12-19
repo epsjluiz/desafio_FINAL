@@ -1,0 +1,111 @@
+.contact-container {
+  max-width: 600px;
+  margin: 40px auto;
+  padding: 20px;
+  background-color: #fff;
+}
+
+h3 {
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 25px;
+  color: #000;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-control {
+  width: 100%;
+  padding: 12px 15px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 14px;
+  color: #555;
+  outline: none;
+}
+
+.form-control:focus {
+  border-color: #088178;
+}
+
+textarea.form-control {
+  resize: vertical;
+}
+
+select.form-control {
+  appearance: none;
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  background-size: 1em;
+  color: #777;
+}
+
+.info-box {
+  background-color: #f8f9fa;
+  border-left: 4px solid #088178;
+  padding: 15px;
+  margin: 20px 0;
+  border-radius: 0 4px 4px 0;
+}
+
+.info-box p {
+  margin: 0;
+  font-size: 13px;
+  color: #555;
+  line-height: 1.5;
+}
+
+.checkbox-group {
+  margin-bottom: 25px;
+}
+
+.form-check {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 10px;
+}
+
+.form-check input[type="checkbox"] {
+  margin-top: 3px;
+  margin-right: 10px;
+  width: 16px;
+  height: 16px;
+  border: 1px solid #777;
+  border-radius: 2px;
+  cursor: pointer;
+}
+
+.form-check label {
+  font-size: 13px;
+  color: #555;
+  cursor: pointer;
+}
+
+.form-check a {
+  color: #088178;
+  text-decoration: underline;
+}
+
+.btn-container {
+  display: flex;
+  justify-content: center;
+}
+
+.btn-enviar {
+  background-color: #ccc;
+  color: #fff;
+  border: none;
+  padding: 12px 60px;
+  border-radius: 4px;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.btn-enviar:hover {
+  background-color: #088178;
+}

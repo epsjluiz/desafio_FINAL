@@ -193,6 +193,30 @@ app.delete('/carrinho/:id', (req, res) => {
   }
 });
 
+app.put('/carrinho/:id', (req, res) => {
+  try {
+    const id = parseInt(req.params.id);
+    const { quantidade } = req.body;
+    
+    const item = db.prepare('SELECT * FROM carrinho_itens WHERE id = ?').get(id);
+    if (!item) {
+      return res.status(404).json({ error: 'Item do carrinho não encontrado' });
+    }
+    
+    if (quantidade <= 0) {
+      db.prepare('DELETE FROM carrinho_itens WHERE id = ?').run(id);
+      return res.json({ message: 'Item removido do carrinho' });
+    }
+
+    db.prepare('UPDATE carrinho_itens SET quantidade = ? WHERE id = ?').run(quantidade, id);
+    
+    const totalItens = db.prepare('SELECT COALESCE(SUM(quantidade),0) as total FROM carrinho_itens').get();
+    res.json({ message: 'Quantidade atualizada', total: totalItens.total });
+  } catch (error) {
+    res.status(500).json({ error: 'Erro ao atualizar item: ' + error.message });
+  }
+});
+
 const DEFAULT_PORT = parseInt(process.env.PORT) || 3000;
 const MAX_TRIES = 10;
 
