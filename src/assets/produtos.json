@@ -1,0 +1,30 @@
+[
+  {
+    "id": 1,
+    "nome": "Prancha de Surf Pro 6'2",
+    "preco": 1499.90,
+    "preco_anterior": 1799.90,
+    "imagem_url": "assets/image/prancha1.webp"
+  },
+  {
+    "id": 2,
+    "nome": "Quilha FCS Performance",
+    "preco": 299.90,
+    "preco_anterior": 349.90,
+    "imagem_url": "assets/image/quilha-fcs.jpg"
+  },
+  {
+    "id": 3,
+    "nome": "Quilha FCS II Neo Glass",
+    "preco": 399.90,
+    "preco_anterior": 459.90,
+    "imagem_url": "assets/image/quilha-fcs2.webp"
+  },
+  {
+    "id": 4,
+    "nome": "Parafina SexWax Warm",
+    "preco": 39.90,
+    "preco_anterior": 49.90,
+    "imagem_url": "assets/image/parafina-sexwax.webp"
+  }
+]

@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, Subject, BehaviorSubject } from 'rxjs';
+import { Observable, Subject, BehaviorSubject, of, switchMap } from 'rxjs';
+import { ProdutoService } from './produto.service';
 import { API_BASE_URL } from '../config';
 
 export interface CarrinhoItem {
@@ -20,7 +21,7 @@ export interface CarrinhoResponse {
 
 @Injectable({ providedIn: 'root' })
 export class CartService {
-  private apiUrl = `${API_BASE_URL}/api/carrinho`;
+  private storageKey = 'carrinho_itens';
   itemAdded$ = new Subject<{ total: number; nome: string }>();
   private cartTotalSubject = new BehaviorSubject<number>(0);
   cartTotal$ = this.cartTotalSubject.asObservable();
@@ -40,7 +41,7 @@ export class CartService {
   private enderecoSubject = new BehaviorSubject<string>('');
   endereco$ = this.enderecoSubject.asObservable();
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private produtoService: ProdutoService) {}
 
   toggleCart(isOpen: boolean): void {
     this.isCartOpen.next(isOpen);
@@ -69,49 +70,63 @@ export class CartService {
   }
 
   addItem(produtoId: number, quantidade: number = 1): Observable<any> {
-    return new Observable((observer) => {
-      this.http.post(this.apiUrl, { produto_id: produtoId, quantidade }).subscribe({
-        next: (res: any) => {
-          this.itemAdded$.next({ total: res.total, nome: '' });
-          this.refreshCartTotal();
-          observer.next(res);
-          observer.complete();
-        },
-        error: (err) => {
-          observer.error(err);
-        }
-      });
-    });
+    return this.getCarrinho().pipe(
+      switchMap((res) => this.produtoService.getProduto(produtoId).pipe(
+        switchMap((produto) => {
+          const itens = res.itens || [];
+          const existente = itens.find(i => i.produto_id === produtoId);
+          if (existente) {
+            existente.quantidade = (existente.quantidade || 1) + (quantidade || 1);
+          } else {
+            itens.push({
+              id: Date.now(),
+              produto_id: produtoId,
+              quantidade: quantidade || 1,
+              nome: produto.nome,
+              preco: produto.preco,
+              preco_anterior: produto.preco_anterior,
+              imagem_url: produto.imagem_url
+            });
+          }
+          localStorage.setItem(this.storageKey, JSON.stringify(itens));
+          const total = itens.reduce((acc, i) => acc + (i.quantidade || 0), 0);
+          this.itemAdded$.next({ total, nome: produto.nome });
+          this.cartTotalSubject.next(total);
+          return of({ message: 'Item adicionado ao carrinho', total });
+        })
+      ))
+    );
   }
 
   getCarrinho(): Observable<CarrinhoResponse> {
-    return this.http.get<CarrinhoResponse>(this.apiUrl);
+    const itens = JSON.parse(localStorage.getItem(this.storageKey) || '[]') as CarrinhoItem[];
+    const total = itens.reduce((acc, i) => acc + (i.quantidade || 0), 0);
+    return of({ itens, total });
   }
 
   updateItem(itemId: number, quantidade: number): Observable<any> {
-    return new Observable((observer) => {
-      this.http.put(`${this.apiUrl}/${itemId}`, { quantidade }).subscribe({
-        next: (res: any) => {
-          this.refreshCartTotal();
-          observer.next(res);
-          observer.complete();
-        },
-        error: (err) => observer.error(err)
-      });
-    });
+    const itens = JSON.parse(localStorage.getItem(this.storageKey) || '[]') as CarrinhoItem[];
+    const idx = itens.findIndex(i => i.id === itemId);
+    if (idx >= 0) {
+      if (quantidade <= 0) {
+        itens.splice(idx, 1);
+      } else {
+        itens[idx].quantidade = quantidade;
+      }
+      localStorage.setItem(this.storageKey, JSON.stringify(itens));
+    }
+    const total = itens.reduce((acc, i) => acc + (i.quantidade || 0), 0);
+    this.cartTotalSubject.next(total);
+    return of({ message: 'Quantidade atualizada', total });
   }
 
   removeItem(itemId: number): Observable<any> {
-    return new Observable((observer) => {
-      this.http.delete(`${this.apiUrl}/${itemId}`).subscribe({
-        next: (res: any) => {
-          this.refreshCartTotal();
-          observer.next(res);
-          observer.complete();
-        },
-        error: (err) => observer.error(err)
-      });
-    });
+    const itens = JSON.parse(localStorage.getItem(this.storageKey) || '[]') as CarrinhoItem[];
+    const updated = itens.filter(i => i.id !== itemId);
+    localStorage.setItem(this.storageKey, JSON.stringify(updated));
+    const total = updated.reduce((acc, i) => acc + (i.quantidade || 0), 0);
+    this.cartTotalSubject.next(total);
+    return of({ message: 'Item removido do carrinho' });
   }
 
   refreshCartTotal(): void {
