@@ -15,7 +15,7 @@ export interface Produto {
   providedIn: 'root'
 })
 export class ProdutoService {
-  private apiUrl = `${API_BASE_URL}/produtos`;
+  private apiUrl = `${API_BASE_URL}/api/produtos`;
 
   constructor(private http: HttpClient) { }
 

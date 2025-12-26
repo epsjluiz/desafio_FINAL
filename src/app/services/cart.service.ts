@@ -20,7 +20,7 @@ export interface CarrinhoResponse {
 
 @Injectable({ providedIn: 'root' })
 export class CartService {
-  private apiUrl = `${API_BASE_URL}/carrinho`;
+  private apiUrl = `${API_BASE_URL}/api/carrinho`;
   itemAdded$ = new Subject<{ total: number; nome: string }>();
   private cartTotalSubject = new BehaviorSubject<number>(0);
   cartTotal$ = this.cartTotalSubject.asObservable();
