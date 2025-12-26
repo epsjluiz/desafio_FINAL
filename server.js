@@ -4,7 +4,8 @@ import Database from 'better-sqlite3';
 
 const app = express();
 
-const db = new Database('produtos.db');
+const dbFile = process.env.DATABASE_PATH || 'produtos.db';
+const db = new Database(dbFile);
 
 db.exec(`
   CREATE TABLE IF NOT EXISTS produtos (
@@ -15,7 +16,6 @@ db.exec(`
   )
 `);
 
-// Carrinho
 db.exec(`
   CREATE TABLE IF NOT EXISTS carrinho_itens (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -25,7 +25,6 @@ db.exec(`
   )
 `);
 
-// Migração: garantir coluna preco_anterior existe
 try {
   const cols = db.prepare("PRAGMA table_info(produtos)").all();
   const hasPrecoAnterior = cols.some((c) => c.name === 'preco_anterior');

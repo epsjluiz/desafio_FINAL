@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, Subject, BehaviorSubject } from 'rxjs';
+import { API_BASE_URL } from '../config';
 
 export interface CarrinhoItem {
   id: number;
@@ -19,7 +20,7 @@ export interface CarrinhoResponse {
 
 @Injectable({ providedIn: 'root' })
 export class CartService {
-  private apiUrl = 'http://localhost:3000/carrinho';
+  private apiUrl = `${API_BASE_URL}/carrinho`;
   itemAdded$ = new Subject<{ total: number; nome: string }>();
   private cartTotalSubject = new BehaviorSubject<number>(0);
   cartTotal$ = this.cartTotalSubject.asObservable();
